@@ -15,16 +15,17 @@
             background-color: #722F37;
             box-shadow: 0 2px 10px rgba(114, 47, 55, 0.3);
         }
-        #recipe-grid {
+        .main-content {
             position: relative;
+            min-height: 70vh;
         }
-        #recipe-grid::before {
+        .main-content::before {
             content: '';
             position: absolute;
             inset: 0;
             background-image: url('icon.jpg');
-            background-size: 65% auto;
-            background-position: center;
+            background-size: 55% auto;
+            background-position: center 40%;
             background-repeat: no-repeat;
             opacity: 0.10;
             transform: rotate(-8deg);
@@ -112,8 +113,8 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <div class="max-w-7xl mx-auto px-8 py-10">
+    <!-- Main Content with full watermark -->
+    <div class="max-w-7xl mx-auto px-8 py-10 main-content">
         <div class="flex items-end justify-between mb-8">
             <div>
                 <p class="text-[#722F37] text-sm font-semibold tracking-[2px] uppercase">DEINE LIEBLINGSREZEPTE</p>
@@ -124,7 +125,7 @@
             </div>
         </div>
 
-        <!-- Recipe Grid with full-area watermark -->
+        <!-- Recipe Grid -->
         <div id="recipe-grid" class="grid grid-cols-1 gap-4 max-w-3xl mx-auto">
             <!-- Populated by JS -->
         </div>
