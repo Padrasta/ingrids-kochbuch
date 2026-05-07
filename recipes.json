@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "name": "Mein klassisches Gulasch",
+    "duration": 150,
+    "mealCat": "Abendessen",
+    "descCat": "Eintopf",
+    "ingredients": [
+      { "name": "Rindfleisch (gulaschfertig)", "qty": 600, "unit": "g" },
+      { "name": "Zwiebeln", "qty": 3, "unit": "Stück" },
+      { "name": "Paprikaschoten (rot)", "qty": 2, "unit": "Stück" },
+      { "name": "Tomatenmark", "qty": 3, "unit": "EL" },
+      { "name": "Rotwein", "qty": 200, "unit": "ml" },
+      { "name": "Rinderbrühe", "qty": 400, "unit": "ml" },
+      { "name": "Lorbeerblätter", "qty": 2, "unit": "Stück" },
+      { "name": "Paprikapulver (edelsüß)", "qty": 2, "unit": "TL" }
+    ],
+    "steps": "1. Zwiebeln fein würfeln und in Öl goldbraun anbraten.\n2. Fleisch portionsweise kräftig anbraten.\n3. Paprika dazu, kurz mitbraten.\n4. Tomatenmark einrühren und 2 Min. rösten.\n5. Mit Rotwein ablöschen, aufkochen.\n6. Brühe und Gewürze hinzufügen.\n7. Bei kleiner Hitze 2 Stunden köcheln lassen, bis das Fleisch zart ist."
+  },
+  {
+    "id": 2,
+    "name": "Schneller Kartoffeleintopf",
+    "duration": 45,
+    "mealCat": "Mittagessen",
+    "descCat": "Eintopf",
+    "ingredients": [
+      { "name": "Kartoffeln", "qty": 800, "unit": "g" },
+      { "name": "Möhren", "qty": 4, "unit": "Stück" },
+      { "name": "Lauch", "qty": 1, "unit": "Stange" },
+      { "name": "Gemüsebrühe", "qty": 1, "unit": "Liter" },
+      { "name": "Majoran", "qty": 1, "unit": "TL" }
+    ],
+    "steps": "1. Gemüse klein schneiden.\n2. Alles in einen Topf geben.\n3. Mit Brühe aufgießen.\n4. 30 Min. köcheln lassen.\n5. Mit Majoran abschmecken."
+  }
+]
