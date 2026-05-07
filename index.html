@@ -188,9 +188,14 @@
                         </div>
                     </div>
                 </div>
-                <button onclick="closeModal()" class="text-white/60 hover:text-white">
-                    <i class="fa-solid fa-times text-2xl"></i>
-                </button>
+                <div class="flex items-center gap-x-2">
+                    <button onclick="editRecipe(currentRecipeId)" class="text-white/70 hover:text-white transition-colors">
+                        <i class="fa-solid fa-edit text-xl"></i>
+                    </button>
+                    <button onclick="closeModal()" class="text-white/60 hover:text-white">
+                        <i class="fa-solid fa-times text-2xl"></i>
+                    </button>
+                </div>
             </div>
 
             <div class="flex flex-col lg:flex-row">
@@ -231,8 +236,7 @@
             </div>
 
             <div class="px-8 py-4 bg-[#f8f5f2] border-t flex justify-end">
-                <button onclick="closeModal()" 
-                        class="px-6 py-2 text-sm font-medium text-[#6b625e] hover:text-[#2c2522]">Schließen</button>
+                <button onclick="closeModal()" class="px-6 py-2 text-sm font-medium text-[#6b625e] hover:text-[#2c2522]">Schließen</button>
             </div>
         </div>
     </div>
@@ -301,8 +305,9 @@
             </div>
             
             <div class="flex gap-x-3 mt-8">
+                <button onclick="deleteCurrentRecipe()" class="flex-1 py-3 text-sm font-medium border border-red-300 text-red-600 rounded-2xl hover:bg-red-50 hidden" id="delete-btn">Löschen</button>
                 <button onclick="hideAddModal()" class="flex-1 py-3 text-sm font-medium border border-[#d1d5db] rounded-2xl hover:bg-[#f8f5f2]">Abbrechen</button>
-                <button onclick="addNewRecipe()" class="flex-1 py-3 bg-[#722F37] text-white text-sm font-semibold rounded-2xl hover:bg-[#5a252b]">Speichern</button>
+                <button onclick="addNewRecipe()" class="flex-1 py-3 bg-[#722F37] text-white text-sm font-semibold rounded-2xl hover:bg-[#5a252b]" id="save-btn">Speichern</button>
             </div>
         </div>
     </div>
@@ -315,6 +320,7 @@
 
         let recipes = [];
         let currentRecipeId = null;
+        let editingId = null;
         let currentPortions = 4;
         let activeFilters = { meal: [], desc: [] };
 
@@ -420,6 +426,49 @@
             document.getElementById('recipe-modal').classList.add('flex');
         }
 
+        function editRecipe(id) {
+            editingId = id;
+            const recipe = recipes.find(r => r.id === id);
+            if (!recipe) return;
+
+            closeModal();
+
+            document.getElementById('new-name').value = recipe.name;
+            document.getElementById('new-duration').value = recipe.duration;
+            document.getElementById('new-meal-cat').value = recipe.mealCat;
+            document.getElementById('new-desc-cat').value = recipe.descCat;
+            document.getElementById('new-healthy').checked = recipe.healthy || false;
+
+            let ingText = recipe.ingredients.map(i => `${i.qty} ${i.unit} ${i.name}`).join('\n');
+            document.getElementById('new-ingredients').value = ingText;
+            document.getElementById('new-steps').value = recipe.steps;
+
+            document.getElementById('save-btn').textContent = 'Aktualisieren';
+            document.getElementById('delete-btn').classList.remove('hidden');
+
+            showAddModal();
+        }
+
+        function deleteCurrentRecipe() {
+            if (!editingId) return;
+            if (confirm('Rezept wirklich löschen?')) {
+                recipes = recipes.filter(r => r.id !== editingId);
+                renderGrid();
+                hideAddModal();
+                resetAddModal();
+            }
+        }
+
+        function resetAddModal() {
+            editingId = null;
+            document.getElementById('save-btn').textContent = 'Speichern';
+            document.getElementById('delete-btn').classList.add('hidden');
+            document.getElementById('new-name').value = '';
+            document.getElementById('new-ingredients').value = '';
+            document.getElementById('new-steps').value = '';
+            document.getElementById('new-healthy').checked = false;
+        }
+
         function renderIngredients(recipe) {
             const list = document.getElementById('ingredients-list');
             list.innerHTML = '';
@@ -463,20 +512,19 @@
         function showAddModal() {
             document.getElementById('add-modal').classList.remove('hidden');
             document.getElementById('add-modal').classList.add('flex');
-            document.getElementById('new-healthy').checked = false;
         }
 
         function hideAddModal() {
             document.getElementById('add-modal').classList.remove('flex');
             document.getElementById('add-modal').classList.add('hidden');
+            resetAddModal();
         }
 
         function addNewRecipe() {
             const name = document.getElementById('new-name').value.trim();
             if (!name) { alert('Bitte einen Rezeptnamen eingeben.'); return; }
 
-            const newRecipe = {
-                id: Date.now(),
+            const newRecipeData = {
                 name: name,
                 duration: parseInt(document.getElementById('new-duration').value) || 60,
                 mealCat: document.getElementById('new-meal-cat').value,
@@ -494,23 +542,24 @@
                         const qty = parseFloat(parts[0]);
                         const unit = parts[1];
                         const ingName = parts.slice(2).join(' ');
-                        if (!isNaN(qty)) newRecipe.ingredients.push({ name: ingName, qty, unit });
+                        if (!isNaN(qty)) newRecipeData.ingredients.push({ name: ingName, qty, unit });
                     }
                 });
             }
 
-            recipes.push(newRecipe);
+            if (editingId) {
+                const idx = recipes.findIndex(r => r.id === editingId);
+                if (idx !== -1) {
+                    recipes[idx] = { ...recipes[idx], ...newRecipeData };
+                }
+                editingId = null;
+            } else {
+                newRecipeData.id = Date.now();
+                recipes.push(newRecipeData);
+            }
+
             renderGrid();
             hideAddModal();
-            document.getElementById('new-name').value = '';
-            document.getElementById('new-ingredients').value = '';
-            document.getElementById('new-steps').value = '';
-            
-            setTimeout(() => {
-                if (confirm('Rezept hinzugefügt! Möchtest du die aktualisierte recipes.json herunterladen, um sie ins Repo zu laden?')) {
-                    exportRecipesAsJSON();
-                }
-            }, 300);
         }
 
         function exportRecipesAsJSON() {
