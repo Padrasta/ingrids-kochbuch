@@ -305,64 +305,18 @@
         let currentPortions = 4;
         let activeFilters = { meal: [], desc: [] };
 
-        // Sample recipes (your favorites)
-        const sampleRecipes = [
-            {
-                id: 1,
-                name: "Mein klassisches Gulasch",
-                duration: 150,
-                mealCat: "Abendessen",
-                descCat: "Eintopf",
-                ingredients: [
-                    { name: "Rindfleisch (gulaschfertig)", qty: 600, unit: "g" },
-                    { name: "Zwiebeln", qty: 3, unit: "Stück" },
-                    { name: "Paprikaschoten (rot)", qty: 2, unit: "Stück" },
-                    { name: "Tomatenmark", qty: 3, unit: "EL" },
-                    { name: "Rotwein", qty: 200, unit: "ml" },
-                    { name: "Rinderbrühe", qty: 400, unit: "ml" },
-                    { name: "Lorbeerblätter", qty: 2, unit: "Stück" },
-                    { name: "Paprikapulver (edelsüß)", qty: 2, unit: "TL" }
-                ],
-                steps: "1. Zwiebeln fein würfeln und in Öl goldbraun anbraten.\n2. Fleisch portionsweise kräftig anbraten.
-3. Paprika dazu, kurz mitbraten.
-4. Tomatenmark einrühren und 2 Min. rösten.
-5. Mit Rotwein ablöschen, aufkochen.
-6. Brühe und Gewürze hinzufügen.\n7. Bei kleiner Hitze 2 Stunden köcheln lassen, bis das Fleisch zart ist."
-            },
-            {
-                id: 2,
-                name: "Schneller Kartoffeleintopf",
-                duration: 45,
-                mealCat: "Mittagessen",
-                descCat: "Eintopf",
-                ingredients: [
-                    { name: "Kartoffeln", qty: 800, unit: "g" },
-                    { name: "Möhren", qty: 4, unit: "Stück" },
-                    { name: "Lauch", qty: 1, unit: "Stange" },
-                    { name: "Gemüsebrühe", qty: 1, unit: "Liter" },
-                    { name: "Majoran", qty: 1, unit: "TL" }
-                ],
-                steps: "1. Gemüse klein schneiden.
-2. Alles in einen Topf geben.
-3. Mit Brühe aufgießen.
-4. 30 Min. köcheln lassen.
-5. Mit Majoran abschmecken."
-            }
-        ];
-
-        function loadRecipes() {
-            const saved = localStorage.getItem('ingridsKochbuch');
-            if (saved) {
-                recipes = JSON.parse(saved);
-            } else {
-                recipes = [...sampleRecipes];
-                saveRecipes();
+        async function loadRecipes() {
+            try {
+                const response = await fetch('./recipes.json');
+                if (!response.ok) {
+                    throw new Error('Konnte recipes.json nicht laden: ' + response.status);
+                }
+                recipes = await response.json();
+            } catch (error) {
+                console.error('Fehler beim Laden der Rezepte:', error);
+                recipes = [];
             }
             renderGrid();
-        }
-
-        function saveRecipes() {
-            localStorage.setItem('ingridsKochbuch', JSON.stringify(recipes));
         }
 
         function getUniqueCategories(type) {
@@ -524,13 +478,28 @@
             }
 
             recipes.push(newRecipe);
-            saveRecipes();
             renderGrid();
             hideAddModal();
             document.getElementById('new-name').value = '';
             document.getElementById('new-ingredients').value = '';
             document.getElementById('new-steps').value = '';
-            setTimeout(() => openRecipeModal(newRecipe.id), 400);
+            
+            // Export-Option für persistentes Speichern im Repo
+            setTimeout(() => {
+                if (confirm('Rezept hinzugefügt! Möchtest du die aktualisierte recipes.json herunterladen, um sie ins Repo zu laden?')) {
+                    exportRecipesAsJSON();
+                }
+            }, 300);
+        }
+
+        function exportRecipesAsJSON() {
+            const dataStr = JSON.stringify(recipes, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+            const exportFileDefaultName = 'recipes.json';
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
         }
 
         function showFilterModal() {
@@ -619,9 +588,9 @@
             currentRecipeId = null;
         }
 
-        function init() {
+        async function init() {
             initializeTailwind();
-            loadRecipes();
+            await loadRecipes();
             
             const searchInput = document.getElementById('search-input');
             searchInput.addEventListener('input', filterRecipes);
@@ -648,7 +617,6 @@
                 }
             });
 
-            document.getElementById('recipe-count').textContent = recipes.length;
             console.log('%c[Ingrid´s Kochbuch] PWA ready – stur, praktisch und mit Liebe gebaut.', 'color:#722F37');
         }
 
