@@ -70,7 +70,7 @@
                 <h1 class="nav-title text-3xl font-bold tracking-tight">Ingrid´s Kochbuch</h1>
             </div>
             
-            <div class="flex items-center gap-x-3">
+            <div class="flex items-center gap-x-4">
                 <!-- Search -->
                 <div class="relative w-72">
                     <input type="text" id="search-input" 
@@ -78,6 +78,13 @@
                            placeholder="Rezept oder Zutat suchen...">
                     <i class="fa-solid fa-search absolute left-4 top-3.5 text-white/60"></i>
                 </div>
+                
+                <!-- Filter Button -->
+                <button onclick="showFilterModal()" 
+                        class="flex items-center gap-x-2 bg-white/10 hover:bg-white/20 px-4 py-2.5 rounded-2xl text-sm font-medium transition-all">
+                    <i class="fa-solid fa-filter"></i>
+                    <span>Filter</span>
+                </button>
                 
                 <!-- Add Button -->
                 <button onclick="showAddModal()" 
@@ -93,17 +100,47 @@
     <div class="max-w-7xl mx-auto px-8 py-10">
         <div class="flex items-end justify-between mb-8">
             <div>
-                <p class="text-[#722F37] text-sm font-semibold tracking-[2px] uppercase">Deine Lieblingsrezepte</p>
-                <h2 class="text-4xl font-bold text-[#2c2522]">Stur & lecker</h2>
+                <p class="text-[#722F37] text-sm font-semibold tracking-[2px] uppercase">DEINE LIEBLINGSREZEPTE</p>
+                <h2 class="text-4xl font-bold text-[#14532d]">Stur & lecker</h2>
             </div>
             <div class="text-sm text-[#6b625e]">
                 <span id="recipe-count">0</span> Rezepte
             </div>
         </div>
 
-        <!-- Recipe Grid -->
-        <div id="recipe-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Recipe Grid (single column list) -->
+        <div id="recipe-grid" class="grid grid-cols-1 gap-4 max-w-3xl mx-auto">
             <!-- Populated by JS -->
+        </div>
+    </div>
+
+    <!-- Filter Modal -->
+    <div id="filter-modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[110] p-4" onclick="if (event.target.id === 'filter-modal') hideFilterModal()">
+        <div onclick="event.stopImmediatePropagation()" class="bg-white w-full max-w-md rounded-3xl p-8 shadow-xl">
+            <h3 class="text-2xl font-bold mb-6 text-[#722F37]">Filter</h3>
+            
+            <div class="space-y-6">
+                <!-- Meal Categories -->
+                <div>
+                    <p class="text-xs font-semibold text-[#6b625e] mb-3 tracking-widest">MAHLZEIT</p>
+                    <div id="meal-filters" class="grid grid-cols-2 gap-2">
+                        <!-- Checkboxes added by JS -->
+                    </div>
+                </div>
+                
+                <!-- Desc Categories -->
+                <div>
+                    <p class="text-xs font-semibold text-[#6b625e] mb-3 tracking-widest">KATEGORIE</p>
+                    <div id="desc-filters" class="grid grid-cols-2 gap-2">
+                        <!-- Checkboxes added by JS -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex gap-x-3 mt-8">
+                <button onclick="clearFilters()" class="flex-1 py-3 text-sm font-medium border border-[#d1d5db] rounded-2xl hover:bg-[#f8f5f2]">Zurücksetzen</button>
+                <button onclick="applyFilters()" class="flex-1 py-3 bg-[#722F37] text-white text-sm font-semibold rounded-2xl hover:bg-[#5a252b]">Anwenden</button>
+            </div>
         </div>
     </div>
 
@@ -240,6 +277,7 @@
         let recipes = [];
         let currentRecipeId = null;
         let currentPortions = 4;
+        let activeFilters = { meal: [], desc: [] };
 
         // Sample recipes (your favorites)
         const sampleRecipes = [
@@ -293,21 +331,37 @@
             localStorage.setItem('ingridsKochbuch', JSON.stringify(recipes));
         }
 
+        function getUniqueCategories(type) {
+            const cats = new Set();
+            recipes.forEach(r => cats.add(type === 'meal' ? r.mealCat : r.descCat));
+            return Array.from(cats).sort();
+        }
+
         function renderGrid(filteredRecipes = null) {
             const grid = document.getElementById('recipe-grid');
             grid.innerHTML = '';
             
-            const toShow = filteredRecipes || recipes;
+            let toShow = filteredRecipes || recipes;
+            
+            // Apply category filters if active
+            if (activeFilters.meal.length > 0 || activeFilters.desc.length > 0) {
+                toShow = toShow.filter(r => {
+                    const mealMatch = activeFilters.meal.length === 0 || activeFilters.meal.includes(r.mealCat);
+                    const descMatch = activeFilters.desc.length === 0 || activeFilters.desc.includes(r.descCat);
+                    return mealMatch && descMatch;
+                });
+            }
+            
             document.getElementById('recipe-count').textContent = toShow.length;
             
             toShow.forEach(recipe => {
                 const card = document.createElement('div');
                 card.className = `recipe-card bg-white border-l-[6px] border-[#722F37] border border-[#722F37]/10 rounded-3xl p-6 cursor-pointer hover:border-[#722F37]/30`;
                 card.innerHTML = `
-                    <div class="flex justify-between items-start mb-4">
-                        <div>
+                    <div class="flex justify-between items-start">
+                        <div class="flex-1">
                             <h3 class="font-bold text-xl leading-tight">${recipe.name}</h3>
-                            <div class="flex items-center gap-x-2 mt-2">
+                            <div class="flex items-center gap-x-2 mt-3">
                                 <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#722F37]/10 text-[#722F37]">
                                     ${recipe.mealCat}
                                 </span>
@@ -316,15 +370,10 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="text-right">
+                        <div class="text-right ml-4">
                             <div class="text-3xl font-bold text-[#722F37]">${recipe.duration}</div>
                             <div class="text-[10px] text-[#6b625e] -mt-1">MIN</div>
                         </div>
-                    </div>
-                    
-                    <div class="flex items-center text-xs text-[#6b625e]">
-                        <i class="fa-solid fa-clock mr-1.5"></i>
-                        <span>${recipe.duration} Minuten</span>
                     </div>
                 `;
                 card.onclick = () => openRecipeModal(recipe.id);
@@ -337,19 +386,14 @@
             const recipe = recipes.find(r => r.id === id);
             if (!recipe) return;
 
-            // Set header
             document.getElementById('modal-recipe-name').textContent = recipe.name;
             document.getElementById('modal-duration').innerHTML = `<i class="fa-solid fa-clock mr-1"></i> ${recipe.duration} Min`;
             document.getElementById('modal-meal-cat').textContent = recipe.mealCat;
 
-            // Reset portions to default
             currentPortions = 4;
             document.getElementById('portion-input').value = 4;
-
-            // Render ingredients with scaling
             renderIngredients(recipe);
 
-            // Render steps
             const stepsList = document.getElementById('steps-list');
             stepsList.innerHTML = '';
             recipe.steps.split('\n').forEach((step, index) => {
@@ -371,9 +415,7 @@
         function renderIngredients(recipe) {
             const list = document.getElementById('ingredients-list');
             list.innerHTML = '';
-            
-            const scale = currentPortions / 4; // base is for 4 portions
-
+            const scale = currentPortions / 4;
             recipe.ingredients.forEach((ing, index) => {
                 const scaledQty = (ing.qty * scale).toFixed(1);
                 const li = document.createElement('li');
@@ -389,49 +431,25 @@
         function updateIngredientQuantities() {
             const input = document.getElementById('portion-input');
             currentPortions = parseInt(input.value) || 4;
-            
             const recipe = recipes.find(r => r.id === currentRecipeId);
-            if (recipe) {
-                renderIngredients(recipe);
-            }
+            if (recipe) renderIngredients(recipe);
         }
 
         function printShoppingList() {
             const recipe = recipes.find(r => r.id === currentRecipeId);
             if (!recipe) return;
-
             const scale = currentPortions / 4;
             let listHTML = `<h1 style="font-family: Playfair Display, serif; color: #722F37; font-size: 28px; margin-bottom: 20px;">Einkaufsliste für ${recipe.name}</h1>`;
-            listHTML += `<p style="margin-bottom: 20px; color: #666;">Für ${currentPortions} Portionen</p>`;
-            listHTML += '<ul style="font-size: 15px; line-height: 1.7;">';
-            
+            listHTML += `<p style="margin-bottom: 20px; color: #666;">Für ${currentPortions} Portionen</p><ul style="font-size: 15px; line-height: 1.7;">`;
             recipe.ingredients.forEach(ing => {
                 const scaledQty = (ing.qty * scale).toFixed(1);
                 listHTML += `<li style="margin-bottom: 8px;"><strong>${scaledQty} ${ing.unit}</strong> ${ing.name}</li>`;
             });
-            
             listHTML += '</ul>';
-            
             const printWindow = window.open('', '_blank');
-            printWindow.document.write(`
-                <html>
-                    <head>
-                        <title>Einkaufsliste - ${recipe.name}</title>
-                        <style>
-                            body { font-family: system-ui, sans-serif; padding: 40px; max-width: 600px; margin: 0 auto; }
-                            h1 { color: #722F37; }
-                        </style>
-                    </head>
-                    <body>
-                        ${listHTML}
-                        <p style="margin-top: 40px; font-size: 12px; color: #999;">Aus Ingrid´s Kochbuch • ${new Date().toLocaleDateString('de-DE')}</p>
-                    </body>
-                </html>
-            `);
+            printWindow.document.write(`<html><head><title>Einkaufsliste - ${recipe.name}</title><style>body { font-family: system-ui, sans-serif; padding: 40px; max-width: 600px; margin: 0 auto; } h1 { color: #722F37; }</style></head><body>${listHTML}<p style="margin-top: 40px; font-size: 12px; color: #999;">Aus Ingrid´s Kochbuch • ${new Date().toLocaleDateString('de-DE')}</p></body></html>`);
             printWindow.document.close();
-            setTimeout(() => {
-                printWindow.print();
-            }, 300);
+            setTimeout(() => printWindow.print(), 300);
         }
 
         function showAddModal() {
@@ -446,10 +464,7 @@
 
         function addNewRecipe() {
             const name = document.getElementById('new-name').value.trim();
-            if (!name) {
-                alert('Bitte einen Rezeptnamen eingeben.');
-                return;
-            }
+            if (!name) { alert('Bitte einen Rezeptnamen eingeben.'); return; }
 
             const newRecipe = {
                 id: Date.now(),
@@ -461,7 +476,6 @@
                 steps: document.getElementById('new-steps').value.trim()
             };
 
-            // Parse ingredients
             const ingText = document.getElementById('new-ingredients').value.trim();
             if (ingText) {
                 ingText.split('\n').forEach(line => {
@@ -470,9 +484,7 @@
                         const qty = parseFloat(parts[0]);
                         const unit = parts[1];
                         const ingName = parts.slice(2).join(' ');
-                        if (!isNaN(qty)) {
-                            newRecipe.ingredients.push({ name: ingName, qty, unit });
-                        }
+                        if (!isNaN(qty)) newRecipe.ingredients.push({ name: ingName, qty, unit });
                     }
                 });
             }
@@ -481,30 +493,90 @@
             saveRecipes();
             renderGrid();
             hideAddModal();
-            
-            // Clear form
             document.getElementById('new-name').value = '';
             document.getElementById('new-ingredients').value = '';
             document.getElementById('new-steps').value = '';
+            setTimeout(() => openRecipeModal(newRecipe.id), 400);
+        }
+
+        function showFilterModal() {
+            const modal = document.getElementById('filter-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
             
-            // Open the new recipe
-            setTimeout(() => {
-                openRecipeModal(newRecipe.id);
-            }, 400);
+            // Populate checkboxes
+            populateFilterCheckboxes();
+        }
+
+        function hideFilterModal() {
+            const modal = document.getElementById('filter-modal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+        }
+
+        function populateFilterCheckboxes() {
+            const mealContainer = document.getElementById('meal-filters');
+            const descContainer = document.getElementById('desc-filters');
+            mealContainer.innerHTML = '';
+            descContainer.innerHTML = '';
+            
+            const mealCats = getUniqueCategories('meal');
+            const descCats = getUniqueCategories('desc');
+            
+            mealCats.forEach(cat => {
+                const checked = activeFilters.meal.includes(cat) ? 'checked' : '';
+                const div = document.createElement('div');
+                div.className = 'flex items-center gap-x-2 bg-[#f8f5f2] px-3 py-2 rounded-2xl';
+                div.innerHTML = `
+                    <input type="checkbox" id="meal-${cat}" value="${cat}" ${checked} class="accent-[#722F37]">
+                    <label for="meal-${cat}" class="text-sm cursor-pointer">${cat}</label>
+                `;
+                mealContainer.appendChild(div);
+            });
+            
+            descCats.forEach(cat => {
+                const checked = activeFilters.desc.includes(cat) ? 'checked' : '';
+                const div = document.createElement('div');
+                div.className = 'flex items-center gap-x-2 bg-[#f8f5f2] px-3 py-2 rounded-2xl';
+                div.innerHTML = `
+                    <input type="checkbox" id="desc-${cat}" value="${cat}" ${checked} class="accent-[#722F37]">
+                    <label for="desc-${cat}" class="text-sm cursor-pointer">${cat}</label>
+                `;
+                descContainer.appendChild(div);
+            });
+        }
+
+        function applyFilters() {
+            activeFilters.meal = [];
+            activeFilters.desc = [];
+            
+            document.querySelectorAll('#meal-filters input:checked').forEach(cb => activeFilters.meal.push(cb.value));
+            document.querySelectorAll('#desc-filters input:checked').forEach(cb => activeFilters.desc.push(cb.value));
+            
+            hideFilterModal();
+            filterRecipes();
+        }
+
+        function clearFilters() {
+            activeFilters = { meal: [], desc: [] };
+            document.querySelectorAll('#meal-filters input, #desc-filters input').forEach(cb => cb.checked = false);
+            hideFilterModal();
+            filterRecipes();
         }
 
         function filterRecipes() {
             const term = document.getElementById('search-input').value.toLowerCase().trim();
-            if (!term) {
-                renderGrid();
-                return;
+            let filtered = recipes;
+            
+            if (term) {
+                filtered = filtered.filter(r => 
+                    r.name.toLowerCase().includes(term) || 
+                    r.ingredients.some(i => i.name.toLowerCase().includes(term)) ||
+                    r.descCat.toLowerCase().includes(term)
+                );
             }
             
-            const filtered = recipes.filter(r => 
-                r.name.toLowerCase().includes(term) || 
-                r.ingredients.some(i => i.name.toLowerCase().includes(term)) ||
-                r.descCat.toLowerCase().includes(term)
-            );
+            // Category filters are applied in renderGrid
             renderGrid(filtered);
         }
 
@@ -515,42 +587,39 @@
             currentRecipeId = null;
         }
 
-        // Initialize everything
         function init() {
             initializeTailwind();
             loadRecipes();
             
-            // Search listener
             const searchInput = document.getElementById('search-input');
             searchInput.addEventListener('input', filterRecipes);
             
-            // Keyboard shortcuts
             document.addEventListener('keydown', function(e) {
                 if (e.key === '/' && document.activeElement.tagName === 'BODY') {
                     e.preventDefault();
                     searchInput.focus();
                 }
                 if (e.key === 'Escape') {
-                    const modal = document.getElementById('recipe-modal');
-                    if (!modal.classList.contains('hidden')) {
-                        closeModal();
-                    } else {
-                        const addModal = document.getElementById('add-modal');
-                        if (!addModal.classList.contains('hidden')) {
-                            hideAddModal();
+                    const modals = document.querySelectorAll('.fixed');
+                    let closed = false;
+                    modals.forEach(m => {
+                        if (!m.classList.contains('hidden') && m.id !== 'recipe-modal') {
+                            m.classList.add('hidden');
+                            m.classList.remove('flex');
+                            closed = true;
                         }
+                    });
+                    if (!closed) {
+                        const recipeModal = document.getElementById('recipe-modal');
+                        if (!recipeModal.classList.contains('hidden')) closeModal();
                     }
                 }
             });
 
-            // Initial count
             document.getElementById('recipe-count').textContent = recipes.length;
-            
-            // Welcome message in console for you
             console.log('%c[Ingrid´s Kochbuch] PWA ready – stur, praktisch und mit Liebe gebaut.', 'color:#722F37');
         }
 
-        // Boot
         window.onload = init;
     </script>
 </body>
