@@ -16,7 +16,22 @@
             box-shadow: 0 2px 10px rgba(114, 47, 55, 0.3);
         }
         .recipe-card {
+            position: relative;
+            overflow: hidden;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .recipe-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('icon.jpg');
+            background-size: 75% auto;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.10;
+            transform: rotate(-8deg);
+            pointer-events: none;
+            z-index: 0;
         }
         .recipe-card:hover {
             transform: translateY(-4px);
