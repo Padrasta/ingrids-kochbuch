@@ -19,23 +19,16 @@
             position: relative;
             min-height: 75vh;
         }
-        .recipe-area {
-            position: relative;
-            min-height: 400px;
-        }
-        .recipe-area::before {
+        .main-content::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%) rotate(-8deg);
-            width: 65%;
-            aspect-ratio: 0.953;
+            inset: 0;
             background-image: url('icon.jpg');
-            background-size: contain;
+            background-size: 70% auto;
+            background-position: center 25%;
             background-repeat: no-repeat;
-            background-position: top center;
             opacity: 0.10;
+            transform: rotate(-8deg);
             pointer-events: none;
             z-index: 0;
         }
@@ -90,7 +83,7 @@
     <nav class="nav-bar text-white sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-8 py-5 flex items-center justify-between">
             <div class="flex items-center gap-x-3">
-                <img src="icon.jpg" class="w-12 h-12 object-contain" alt="Hexenkochbuch Icon">
+                <span class="text-4xl">🍽️</span>
                 <h1 class="nav-title text-3xl font-bold tracking-tight">Ingrid´s Kochbuch</h1>
             </div>
             
@@ -133,10 +126,8 @@
         </div>
 
         <!-- Recipe Grid -->
-        <div class="recipe-area">
-            <div id="recipe-grid" class="grid grid-cols-1 gap-4 max-w-3xl mx-auto">
-                <!-- Populated by JS -->
-            </div>
+        <div id="recipe-grid" class="grid grid-cols-1 gap-4 max-w-3xl mx-auto">
+            <!-- Populated by JS -->
         </div>
     </div>
 
