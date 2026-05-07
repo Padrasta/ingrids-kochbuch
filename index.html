@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingrid´s Kochbuch</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap');
+        :root {
+            --bordeaux: #722F37;
+        }
+        .nav-bar {
+            background-color: #722F37;
+            box-shadow: 0 2px 10px rgba(114, 47, 55, 0.3);
+        }
+        .recipe-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .recipe-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgb(114 47 55 / 0.1), 0 8px 10px -6px rgb(114 47 55 / 0.1);
+        }
+        .book-page {
+            box-shadow: 0 10px 30px -15px rgb(0 0 0 / 0.3);
+            border: 1px solid #e5e7eb;
+        }
+        .book-left {
+            border-right: 2px solid #d1d5db;
+            background: linear-gradient(to right, #fff, #f9fafb);
+        }
+        .book-right {
+            background: linear-gradient(to left, #fff, #f9fafb);
+        }
+        .nav-title {
+            font-family: 'Playfair Display', serif;
+            letter-spacing: -0.02em;
+        }
+        .section-header {
+            font-family: 'Playfair Display', serif;
+        }
+        .ingredient-item {
+            transition: all 0.2s ease;
+        }
+        .modal {
+            animation: fadeInScale 0.3s ease forwards;
+        }
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .print-only {
+            display: none;
+        }
+        @media print {
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+        }
+    </style>
+</head>
+<body class="bg-[#f8f5f2] text-[#2c2522] font-sans">
+    <!-- Top Navigation -->
+    <nav class="nav-bar text-white sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-8 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-x-3">
+                <div class="w-9 h-9 bg-white/20 rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-book text-xl"></i>
+                </div>
+                <h1 class="nav-title text-3xl font-bold tracking-tight">Ingrid´s Kochbuch</h1>
+            </div>
+            
+            <div class="flex items-center gap-x-3">
+                <!-- Search -->
+                <div class="relative w-72">
+                    <input type="text" id="search-input" 
+                           class="w-full bg-white/10 border border-white/30 text-white placeholder-white/60 pl-11 py-2.5 rounded-2xl focus:outline-none focus:ring-2 focus:ring-white/50 text-sm"
+                           placeholder="Rezept oder Zutat suchen...">
+                    <i class="fa-solid fa-search absolute left-4 top-3.5 text-white/60"></i>
+                </div>
+                
+                <!-- Add Button -->
+                <button onclick="showAddModal()" 
+                        class="flex items-center gap-x-2 bg-white text-[#722F37] hover:bg-[#f8f5f2] px-5 py-2.5 rounded-2xl font-semibold text-sm transition-all active:scale-[0.985]">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Rezept</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-8 py-10">
+        <div class="flex items-end justify-between mb-8">
+            <div>
+                <p class="text-[#722F37] text-sm font-semibold tracking-[2px] uppercase">Deine Lieblingsrezepte</p>
+                <h2 class="text-4xl font-bold text-[#2c2522]">Stur & lecker</h2>
+            </div>
+            <div class="text-sm text-[#6b625e]">
+                <span id="recipe-count">0</span> Rezepte
+            </div>
+        </div>
+
+        <!-- Recipe Grid -->
+        <div id="recipe-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+
+    <!-- Recipe Detail Modal (Book View) -->
+    <div id="recipe-modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[100] p-4" onclick="if (event.target.id === 'recipe-modal') closeModal()">
+        <div onclick="event.stopImmediatePropagation()" class="bg-white w-full max-w-5xl rounded-3xl overflow-hidden shadow-2xl modal">
+            <!-- Modal Header -->
+            <div class="px-8 py-5 border-b flex items-center justify-between bg-[#722F37] text-white">
+                <div class="flex items-center gap-x-4">
+                    <button onclick="closeModal()" class="text-white/70 hover:text-white transition-colors">
+                        <i class="fa-solid fa-arrow-left text-xl"></i>
+                    </button>
+                    <div>
+                        <h3 id="modal-recipe-name" class="font-bold text-2xl"></h3>
+                        <div class="flex items-center gap-x-3 text-sm text-white/70 mt-0.5">
+                            <span id="modal-duration"></span>
+                            <span class="px-2.5 py-0.5 bg-white/20 rounded-full text-xs" id="modal-meal-cat"></span>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="closeModal()" class="text-white/60 hover:text-white">
+                    <i class="fa-solid fa-times text-2xl"></i>
+                </button>
+            </div>
+
+            <div class="flex flex-col lg:flex-row">
+                <!-- Left Page: Ingredients -->
+                <div class="book-left w-full lg:w-1/2 p-8 lg:p-10">
+                    <div class="flex items-center justify-between mb-6">
+                        <h4 class="section-header text-2xl font-bold text-[#722F37]">Zutaten</h4>
+                        
+                        <!-- Portion Calculator -->
+                        <div class="flex items-center gap-x-2 bg-[#f8f5f2] px-3 py-1.5 rounded-2xl border border-[#722F37]/10">
+                            <label class="text-xs font-medium text-[#6b625e]">Portionen</label>
+                            <input type="number" id="portion-input" value="4" min="1" 
+                                   class="w-14 text-center bg-white border border-[#722F37]/20 rounded-xl py-1 text-sm font-semibold focus:outline-none focus:border-[#722F37]"
+                                   oninput="updateIngredientQuantities()">
+                        </div>
+                    </div>
+                    
+                    <ul id="ingredients-list" class="space-y-3 text-sm">
+                        <!-- Populated by JS -->
+                    </ul>
+                    
+                    <div class="mt-8 pt-6 border-t border-[#722F37]/10">
+                        <button onclick="printShoppingList()" 
+                                class="w-full flex items-center justify-center gap-x-2 bg-[#722F37] hover:bg-[#5a252b] text-white py-3 rounded-2xl font-semibold text-sm transition-all">
+                            <i class="fa-solid fa-print"></i>
+                            <span>Einkaufsliste drucken</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Page: Preparation -->
+                <div class="book-right w-full lg:w-1/2 p-8 lg:p-10 border-t lg:border-t-0 lg:border-l border-[#722F37]/10">
+                    <h4 class="section-header text-2xl font-bold text-[#722F37] mb-6">Zubereitung</h4>
+                    <ol id="steps-list" class="space-y-4 text-[15px] leading-relaxed text-[#3f3734]">
+                        <!-- Populated by JS -->
+                    </ol>
+                </div>
+            </div>
+
+            <div class="px-8 py-4 bg-[#f8f5f2] border-t flex justify-end">
+                <button onclick="closeModal()" 
+                        class="px-6 py-2 text-sm font-medium text-[#6b625e] hover:text-[#2c2522]">Schließen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Recipe Modal -->
+    <div id="add-modal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-[110] p-4" onclick="if (event.target.id === 'add-modal') hideAddModal()">
+        <div onclick="event.stopImmediatePropagation()" class="bg-white w-full max-w-lg rounded-3xl p-8 shadow-xl">
+            <h3 class="text-2xl font-bold mb-6 text-[#722F37]">Neues Rezept</h3>
+            
+            <div class="space-y-5">
+                <div>
+                    <label class="block text-xs font-semibold text-[#6b625e] mb-1.5">REZEPTNAME</label>
+                    <input type="text" id="new-name" class="w-full border border-[#d1d5db] rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-[#722F37]" placeholder="z.B. Mein Gulasch">
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-[#6b625e] mb-1.5">KOCHDAUER (Min.)</label>
+                        <input type="number" id="new-duration" class="w-full border border-[#d1d5db] rounded-2xl px-4 py-3 text-sm" value="120">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-[#6b625e] mb-1.5">MAHLZEIT</label>
+                        <select id="new-meal-cat" class="w-full border border-[#d1d5db] rounded-2xl px-4 py-3 text-sm">
+                            <option>Frühstück</option>
+                            <option>Mittagessen</option>
+                            <option>Abendessen</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-xs font-semibold text-[#6b625e] mb-1.5">KATEGORIE</label>
+                    <select id="new-desc-cat" class="w-full border border-[#d1d5db] rounded-2xl px-4 py-3 text-sm">
+                        <option>Eintopf</option>
+                        <option>Hauptgericht</option>
+                        <option>Nachtisch</option>
+                        <option>Backen</option>
+                        <option>Suppe</option>
+                        <option>Süßspeise</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-xs font-semibold text-[#6b625e] mb-1.5">ZUTATEN (eine pro Zeile, Format: Menge Einheit Name)</label>
+                    <textarea id="new-ingredients" rows="4" class="w-full border border-[#d1d5db] rounded-2xl px-4 py-3 text-sm font-mono" placeholder="500 g Rindfleisch
+2 Stück Zwiebeln
+..."></textarea>
+                </div>
+                
+                <div>
+                    <label class="block text-xs font-semibold text-[#6b625e] mb-1.5">ZUBEREITUNG (Schritt für Schritt)</label>
+                    <textarea id="new-steps" rows="5" class="w-full border border-[#d1d5db] rounded-2xl px-4 py-3 text-sm" placeholder="1. Zwiebeln schneiden..."></textarea>
+                </div>
+            </div>
+            
+            <div class="flex gap-x-3 mt-8">
+                <button onclick="hideAddModal()" class="flex-1 py-3 text-sm font-medium border border-[#d1d5db] rounded-2xl hover:bg-[#f8f5f2]">Abbrechen</button>
+                <button onclick="addNewRecipe()" class="flex-1 py-3 bg-[#722F37] text-white text-sm font-semibold rounded-2xl hover:bg-[#5a252b]">Speichern</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tailwind script
+        function initializeTailwind() {
+            document.documentElement.style.setProperty('--accent', '#722F37');
+        }
+
+        let recipes = [];
+        let currentRecipeId = null;
+        let currentPortions = 4;
+
+        // Sample recipes (your favorites)
+        const sampleRecipes = [
+            {
+                id: 1,
+                name: "Mein klassisches Gulasch",
+                duration: 150,
+                mealCat: "Abendessen",
+                descCat: "Eintopf",
+                ingredients: [
+                    { name: "Rindfleisch (gulaschfertig)", qty: 600, unit: "g" },
+                    { name: "Zwiebeln", qty: 3, unit: "Stück" },
+                    { name: "Paprikaschoten (rot)", qty: 2, unit: "Stück" },
+                    { name: "Tomatenmark", qty: 3, unit: "EL" },
+                    { name: "Rotwein", qty: 200, unit: "ml" },
+                    { name: "Rinderbrühe", qty: 400, unit: "ml" },
+                    { name: "Lorbeerblätter", qty: 2, unit: "Stück" },
+                    { name: "Paprikapulver (edelsüß)", qty: 2, unit: "TL" }
+                ],
+                steps: "1. Zwiebeln fein würfeln und in Öl goldbraun anbraten.\n2. Fleisch portionsweise kräftig anbraten.\n3. Paprika dazu, kurz mitbraten.\n4. Tomatenmark einrühren und 2 Min. rösten.\n5. Mit Rotwein ablöschen, aufkochen.\n6. Brühe und Gewürze hinzufügen.\n7. Bei kleiner Hitze 2 Stunden köcheln lassen, bis das Fleisch zart ist."
+            },
+            {
+                id: 2,
+                name: "Schneller Kartoffeleintopf",
+                duration: 45,
+                mealCat: "Mittagessen",
+                descCat: "Eintopf",
+                ingredients: [
+                    { name: "Kartoffeln", qty: 800, unit: "g" },
+                    { name: "Möhren", qty: 4, unit: "Stück" },
+                    { name: "Lauch", qty: 1, unit: "Stange" },
+                    { name: "Gemüsebrühe", qty: 1, unit: "Liter" },
+                    { name: "Majoran", qty: 1, unit: "TL" }
+                ],
+                steps: "1. Gemüse klein schneiden.\n2. Alles in einen Topf geben.\n3. Mit Brühe aufgießen.\n4. 30 Min. köcheln lassen.\n5. Mit Majoran abschmecken."
+            }
+        ];
+
+        function loadRecipes() {
+            const saved = localStorage.getItem('ingridsKochbuch');
+            if (saved) {
+                recipes = JSON.parse(saved);
+            } else {
+                recipes = [...sampleRecipes];
+                saveRecipes();
+            }
+            renderGrid();
+        }
+
+        function saveRecipes() {
+            localStorage.setItem('ingridsKochbuch', JSON.stringify(recipes));
+        }
+
+        function renderGrid(filteredRecipes = null) {
+            const grid = document.getElementById('recipe-grid');
+            grid.innerHTML = '';
+            
+            const toShow = filteredRecipes || recipes;
+            document.getElementById('recipe-count').textContent = toShow.length;
+            
+            toShow.forEach(recipe => {
+                const card = document.createElement('div');
+                card.className = `recipe-card bg-white border border-[#722F37]/10 rounded-3xl p-6 cursor-pointer hover:border-[#722F37]/30`;
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="font-bold text-xl leading-tight">${recipe.name}</h3>
+                            <div class="flex items-center gap-x-2 mt-2">
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#722F37]/10 text-[#722F37]">
+                                    ${recipe.mealCat}
+                                </span>
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#722F37]/5 text-[#6b625e]">
+                                    ${recipe.descCat}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-3xl font-bold text-[#722F37]">${recipe.duration}</div>
+                            <div class="text-[10px] text-[#6b625e] -mt-1">MIN</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center text-xs text-[#6b625e]">
+                        <i class="fa-solid fa-clock mr-1.5"></i>
+                        <span>${recipe.duration} Minuten</span>
+                    </div>
+                `;
+                card.onclick = () => openRecipeModal(recipe.id);
+                grid.appendChild(card);
+            });
+        }
+
+        function openRecipeModal(id) {
+            currentRecipeId = id;
+            const recipe = recipes.find(r => r.id === id);
+            if (!recipe) return;
+
+            // Set header
+            document.getElementById('modal-recipe-name').textContent = recipe.name;
+            document.getElementById('modal-duration').innerHTML = `<i class="fa-solid fa-clock mr-1"></i> ${recipe.duration} Min`;
+            document.getElementById('modal-meal-cat').textContent = recipe.mealCat;
+
+            // Reset portions to default
+            currentPortions = 4;
+            document.getElementById('portion-input').value = 4;
+
+            // Render ingredients with scaling
+            renderIngredients(recipe);
+
+            // Render steps
+            const stepsList = document.getElementById('steps-list');
+            stepsList.innerHTML = '';
+            recipe.steps.split('\n').forEach((step, index) => {
+                if (step.trim()) {
+                    const li = document.createElement('li');
+                    li.className = 'pl-6 relative';
+                    li.innerHTML = `
+                        <span class="absolute left-0 top-0.5 w-5 h-5 flex items-center justify-center bg-[#722F37] text-white text-xs rounded-full font-bold">${index + 1}</span>
+                        ${step.trim()}
+                    `;
+                    stepsList.appendChild(li);
+                }
+            });
+
+            document.getElementById('recipe-modal').classList.remove('hidden');
+            document.getElementById('recipe-modal').classList.add('flex');
+        }
+
+        function renderIngredients(recipe) {
+            const list = document.getElementById('ingredients-list');
+            list.innerHTML = '';
+            
+            const scale = currentPortions / 4; // base is for 4 portions
+
+            recipe.ingredients.forEach((ing, index) => {
+                const scaledQty = (ing.qty * scale).toFixed(1);
+                const li = document.createElement('li');
+                li.className = 'ingredient-item flex justify-between py-2 border-b border-[#722F37]/10 last:border-none';
+                li.innerHTML = `
+                    <span class="font-medium">${ing.name}</span>
+                    <span class="font-mono text-[#722F37] font-semibold tabular-nums">${scaledQty} ${ing.unit}</span>
+                `;
+                list.appendChild(li);
+            });
+        }
+
+        function updateIngredientQuantities() {
+            const input = document.getElementById('portion-input');
+            currentPortions = parseInt(input.value) || 4;
+            
+            const recipe = recipes.find(r => r.id === currentRecipeId);
+            if (recipe) {
+                renderIngredients(recipe);
+            }
+        }
+
+        function printShoppingList() {
+            const recipe = recipes.find(r => r.id === currentRecipeId);
+            if (!recipe) return;
+
+            const scale = currentPortions / 4;
+            let listHTML = `<h1 style="font-family: Playfair Display, serif; color: #722F37; font-size: 28px; margin-bottom: 20px;">Einkaufsliste für ${recipe.name}</h1>`;
+            listHTML += `<p style="margin-bottom: 20px; color: #666;">Für ${currentPortions} Portionen</p>`;
+            listHTML += '<ul style="font-size: 15px; line-height: 1.7;">';
+            
+            recipe.ingredients.forEach(ing => {
+                const scaledQty = (ing.qty * scale).toFixed(1);
+                listHTML += `<li style="margin-bottom: 8px;"><strong>${scaledQty} ${ing.unit}</strong> ${ing.name}</li>`;
+            });
+            
+            listHTML += '</ul>';
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Einkaufsliste - ${recipe.name}</title>
+                        <style>
+                            body { font-family: system-ui, sans-serif; padding: 40px; max-width: 600px; margin: 0 auto; }
+                            h1 { color: #722F37; }
+                        </style>
+                    </head>
+                    <body>
+                        ${listHTML}
+                        <p style="margin-top: 40px; font-size: 12px; color: #999;">Aus Ingrid´s Kochbuch • ${new Date().toLocaleDateString('de-DE')}</p>
+                    </body>
+                </html>
+            `);
+            printWindow.document.close();
+            setTimeout(() => {
+                printWindow.print();
+            }, 300);
+        }
+
+        function showAddModal() {
+            document.getElementById('add-modal').classList.remove('hidden');
+            document.getElementById('add-modal').classList.add('flex');
+        }
+
+        function hideAddModal() {
+            document.getElementById('add-modal').classList.remove('flex');
+            document.getElementById('add-modal').classList.add('hidden');
+        }
+
+        function addNewRecipe() {
+            const name = document.getElementById('new-name').value.trim();
+            if (!name) {
+                alert('Bitte einen Rezeptnamen eingeben.');
+                return;
+            }
+
+            const newRecipe = {
+                id: Date.now(),
+                name: name,
+                duration: parseInt(document.getElementById('new-duration').value) || 60,
+                mealCat: document.getElementById('new-meal-cat').value,
+                descCat: document.getElementById('new-desc-cat').value,
+                ingredients: [],
+                steps: document.getElementById('new-steps').value.trim()
+            };
+
+            // Parse ingredients
+            const ingText = document.getElementById('new-ingredients').value.trim();
+            if (ingText) {
+                ingText.split('\n').forEach(line => {
+                    const parts = line.trim().split(/\s+/);
+                    if (parts.length >= 3) {
+                        const qty = parseFloat(parts[0]);
+                        const unit = parts[1];
+                        const ingName = parts.slice(2).join(' ');
+                        if (!isNaN(qty)) {
+                            newRecipe.ingredients.push({ name: ingName, qty, unit });
+                        }
+                    }
+                });
+            }
+
+            recipes.push(newRecipe);
+            saveRecipes();
+            renderGrid();
+            hideAddModal();
+            
+            // Clear form
+            document.getElementById('new-name').value = '';
+            document.getElementById('new-ingredients').value = '';
+            document.getElementById('new-steps').value = '';
+            
+            // Open the new recipe
+            setTimeout(() => {
+                openRecipeModal(newRecipe.id);
+            }, 400);
+        }
+
+        function filterRecipes() {
+            const term = document.getElementById('search-input').value.toLowerCase().trim();
+            if (!term) {
+                renderGrid();
+                return;
+            }
+            
+            const filtered = recipes.filter(r => 
+                r.name.toLowerCase().includes(term) || 
+                r.ingredients.some(i => i.name.toLowerCase().includes(term)) ||
+                r.descCat.toLowerCase().includes(term)
+            );
+            renderGrid(filtered);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('recipe-modal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+            currentRecipeId = null;
+        }
+
+        // Initialize everything
+        function init() {
+            initializeTailwind();
+            loadRecipes();
+            
+            // Search listener
+            const searchInput = document.getElementById('search-input');
+            searchInput.addEventListener('input', filterRecipes);
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.key === '/' && document.activeElement.tagName === 'BODY') {
+                    e.preventDefault();
+                    searchInput.focus();
+                }
+                if (e.key === 'Escape') {
+                    const modal = document.getElementById('recipe-modal');
+                    if (!modal.classList.contains('hidden')) {
+                        closeModal();
+                    } else {
+                        const addModal = document.getElementById('add-modal');
+                        if (!addModal.classList.contains('hidden')) {
+                            hideAddModal();
+                        }
+                    }
+                }
+            });
+
+            // Initial count
+            document.getElementById('recipe-count').textContent = recipes.length;
+            
+            // Welcome message in console for you
+            console.log('%c[Ingrid´s Kochbuch] PWA ready – stur, praktisch und mit Liebe gebaut.', 'color:#722F37');
+        }
+
+        // Boot
+        window.onload = init;
+    </script>
+</body>
+</html>
