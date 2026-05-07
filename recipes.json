@@ -31,5 +31,39 @@
       { "name": "Majoran", "qty": 1, "unit": "TL" }
     ],
     "steps": "1. Gemüse klein schneiden.\n2. Alles in einen Topf geben.\n3. Mit Brühe aufgießen.\n4. 30 Min. köcheln lassen.\n5. Mit Majoran abschmecken."
+  },
+  {
+    "id": 3,
+    "name": "Apfel-Hafer-Pancakes alla Doniswald",
+    "duration": 30,
+    "mealCat": "Frühstück",
+    "descCat": "Süßspeise",
+    "ingredients": [
+      { "name": "Äpfel", "qty": 2, "unit": "Stück" },
+      { "name": "Eier", "qty": 2, "unit": "Stück" },
+      { "name": "Vanillezucker", "qty": 1, "unit": "Packung" },
+      { "name": "Backpulver", "qty": 0.5, "unit": "TL" },
+      { "name": "Haferflocken", "qty": 200, "unit": "g" },
+      { "name": "Milch", "qty": 250, "unit": "ml" },
+      { "name": "Salz", "qty": 1, "unit": "Prise" },
+      { "name": "Rapsöl", "qty": null, "unit": "etwas für die Pfanne" }
+    ],
+    "steps": "1. Die Äpfel grob mit der Vierkantreibe raspeln und in eine Schüssel geben. Eier sowie Vanille(-zucker) und die Prise Salz hinzufügen. Haferflocken, Backpulver und Milch unterrühren und alles zu einem glatten Teig vermengen.\n2. Die Pfanne erhitzen, 1 EL Rapsöl hinzufügen und die Pancakes bei mittlerer Hitze goldbraun ausbacken.",
+    "image": "apfel-hafer-pancakes.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Himbeermarmelade alla Doniswald",
+    "duration": 15,
+    "mealCat": "Frühstück",
+    "descCat": "Süßspeise",
+    "ingredients": [
+      { "name": "Himbeeren (tiefgekühlt)", "qty": 150, "unit": "g" },
+      { "name": "Chiasamen", "qty": 1, "unit": "EL" },
+      { "name": "Honig oder andere Süße", "qty": 1, "unit": "-2 TL" },
+      { "name": "Zitronensaft", "qty": null, "unit": "etwas" }
+    ],
+    "steps": "Himbeeren in einem Topf erhitzen. Einen Esslöffel Chiasamen, 1-2 TL Honig oder andere Süße sowie etwas Zitronensaft hinzufügen. Mit Vanille oder Zimt abschmecken.",
+    "healthy": true
   }
 ]
