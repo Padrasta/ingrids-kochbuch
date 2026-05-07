@@ -184,6 +184,7 @@
                         <div class="flex items-center gap-x-3 text-sm text-white/70 mt-0.5">
                             <span id="modal-duration"></span>
                             <span class="px-2.5 py-0.5 bg-white/20 rounded-full text-xs" id="modal-meal-cat"></span>
+                            <span id="modal-healthy" class="px-2.5 py-0.5 bg-emerald-500/80 text-white rounded-full text-xs hidden">🌿 Gesund</span>
                         </div>
                     </div>
                 </div>
@@ -271,7 +272,19 @@
                         <option>Backen</option>
                         <option>Suppe</option>
                         <option>Süßspeise</option>
+                        <option>Fisch</option>
+                        <option>Fleisch</option>
+                        <option>Dessert</option>
+                        <option>Beilage</option>
+                        <option>Salat</option>
                     </select>
+                </div>
+                
+                <div>
+                    <label class="flex items-center gap-x-2 text-xs font-semibold text-[#6b625e] mb-1.5">
+                        <input type="checkbox" id="new-healthy" class="accent-[#722F37]">
+                        <span>Besonders gesund 🌿</span>
+                    </label>
                 </div>
                 
                 <div>
@@ -356,6 +369,7 @@
                                 <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#722F37]/5 text-[#6b625e]">
                                     ${recipe.descCat}
                                 </span>
+                                ${recipe.healthy ? `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-700">🌿</span>` : ''}
                             </div>
                         </div>
                         <div class="text-right ml-4">
@@ -377,6 +391,12 @@
             document.getElementById('modal-recipe-name').textContent = recipe.name;
             document.getElementById('modal-duration').innerHTML = `<i class="fa-solid fa-clock mr-1"></i> ${recipe.duration} Min`;
             document.getElementById('modal-meal-cat').textContent = recipe.mealCat;
+            const healthySpan = document.getElementById('modal-healthy');
+            if (recipe.healthy) {
+                healthySpan.classList.remove('hidden');
+            } else {
+                healthySpan.classList.add('hidden');
+            }
 
             currentPortions = 4;
             document.getElementById('portion-input').value = 4;
@@ -443,6 +463,7 @@
         function showAddModal() {
             document.getElementById('add-modal').classList.remove('hidden');
             document.getElementById('add-modal').classList.add('flex');
+            document.getElementById('new-healthy').checked = false;
         }
 
         function hideAddModal() {
@@ -460,6 +481,7 @@
                 duration: parseInt(document.getElementById('new-duration').value) || 60,
                 mealCat: document.getElementById('new-meal-cat').value,
                 descCat: document.getElementById('new-desc-cat').value,
+                healthy: document.getElementById('new-healthy').checked,
                 ingredients: [],
                 steps: document.getElementById('new-steps').value.trim()
             };
@@ -484,7 +506,6 @@
             document.getElementById('new-ingredients').value = '';
             document.getElementById('new-steps').value = '';
             
-            // Export-Option für persistentes Speichern im Repo
             setTimeout(() => {
                 if (confirm('Rezept hinzugefügt! Möchtest du die aktualisierte recipes.json herunterladen, um sie ins Repo zu laden?')) {
                     exportRecipesAsJSON();
