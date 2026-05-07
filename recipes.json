@@ -48,8 +48,7 @@
       { "name": "Salz", "qty": 1, "unit": "Prise" },
       { "name": "Rapsöl", "qty": null, "unit": "etwas für die Pfanne" }
     ],
-    "steps": "1. Die Äpfel grob mit der Vierkantreibe raspeln und in eine Schüssel geben. Eier sowie Vanille(-zucker) und die Prise Salz hinzufügen. Haferflocken, Backpulver und Milch unterrühren und alles zu einem glatten Teig vermengen.\n2. Die Pfanne erhitzen, 1 EL Rapsöl hinzufügen und die Pancakes bei mittlerer Hitze goldbraun ausbacken.",
-    "image": "apfel-hafer-pancakes.jpg"
+    "steps": "1. Die Äpfel grob mit der Vierkantreibe raspeln und in eine Schüssel geben. Eier sowie Vanille(-zucker) und die Prise Salz hinzufügen. Haferflocken, Backpulver und Milch unterrühren und alles zu einem glatten Teig vermengen.\n2. Die Pfanne erhitzen, 1 EL Rapsöl hinzufügen und die Pancakes bei mittlerer Hitze goldbraun ausbacken."
   },
   {
     "id": 4,
@@ -60,10 +59,68 @@
     "ingredients": [
       { "name": "Himbeeren (tiefgekühlt)", "qty": 150, "unit": "g" },
       { "name": "Chiasamen", "qty": 1, "unit": "EL" },
-      { "name": "Honig oder andere Süße", "qty": 1, "unit": "-2 TL" },
-      { "name": "Zitronensaft", "qty": null, "unit": "etwas" }
+      { "name": "Honig oder andere Süße", "qty": 1, "unit": "EL" },
+      { "name": "Zitronensaft", "qty": null, "unit": "etwas" },
+      { "name": "Vanille oder Zimt", "qty": null, "unit": "nach Geschmack" }
     ],
-    "steps": "Himbeeren in einem Topf erhitzen. Einen Esslöffel Chiasamen, 1-2 TL Honig oder andere Süße sowie etwas Zitronensaft hinzufügen. Mit Vanille oder Zimt abschmecken.",
-    "healthy": true
+    "steps": "Himbeeren in einem Topf erhitzen. Chiasamen, Honig und Zitronensaft hinzufügen. Mit Vanille oder Zimt abschmecken. Abkühlen lassen."
+  },
+  {
+    "id": 5,
+    "name": "Erbsenaufstrich mit Cashewkernen alla Doniswald",
+    "duration": 20,
+    "mealCat": "Frühstück",
+    "descCat": "Beilage",
+    "ingredients": [
+      { "name": "Erbsen TK", "qty": 150, "unit": "g" },
+      { "name": "Zwiebel", "qty": 1, "unit": "Stück" },
+      { "name": "Rapsöl", "qty": 1, "unit": "TL" },
+      { "name": "Cashewkerne", "qty": 100, "unit": "g" },
+      { "name": "Zitrone (Saft)", "qty": 0.5, "unit": "Stück" },
+      { "name": "Salz", "qty": null, "unit": "" },
+      { "name": "Pfeffer", "qty": null, "unit": "" }
+    ],
+    "steps": "1. Zwiebel schälen, würfeln und in einem kleinen Topf mit etwas Öl andünsten.\n2. Erbsen und ca. 50 ml Wasser hinzufügen und für ca. 10 Minuten köcheln lassen, bis die Erbsen gar sind. In der Zwischenzeit die Cashewkerne in einer Pfanne ohne Öl rösten.\n3. Erbsen-Zwiebelgemisch und Cashewkerne mit einem Pürierstab mixen und mit Salz, Pfeffer und Zitronensaft abschmecken."
+  },
+  {
+    "id": 6,
+    "name": "Protein Bagels alla Doniswald",
+    "duration": 45,
+    "mealCat": "Frühstück",
+    "descCat": "Backen",
+    "ingredients": [
+      { "name": "Dinkelmehl (Type 630)", "qty": 250, "unit": "g" },
+      { "name": "Magerquark", "qty": 300, "unit": "g" },
+      { "name": "Ei", "qty": 1, "unit": "Stück" },
+      { "name": "Backpulver", "qty": 1, "unit": "TL gehäuft" },
+      { "name": "Salz", "qty": 0.5, "unit": "TL" },
+      { "name": "Ei (zum Bestreichen)", "qty": 1, "unit": "Stück" },
+      { "name": "Sesam", "qty": null, "unit": "zum Bestreuen" }
+    ],
+    "steps": "1. Den Backofen auf 180° Ober-/Unterhitze vorheizen.\n2. Die Zutaten für den Teig verkneten. Es sollte eine feste Konsistenz entstehen, die nicht mehr klebt.\n3. Den Teig in 8 Teile teilen, jeweils zu einer Rolle rollen und daraus Bagel formen.\n4. Auf ein Blech mit Backpapier legen, mit verquirltem Ei bestreichen und mit Sesam bestreuen.\n5. Ca. 30 Minuten im Backofen backen, bis die Bagel eine gold-gelbe Farbe bekommen."
+  },
+  {
+    "id": 7,
+    "name": "Grok's Gulasch mit Long Pepper",
+    "duration": 120,
+    "mealCat": "Abendessen",
+    "descCat": "Hauptgericht",
+    "ingredients": [
+      { "name": "Gulaschfleisch (Rind oder gemischt)", "qty": 800, "unit": "g" },
+      { "name": "Zwiebeln (groß)", "qty": 2, "unit": "Stück" },
+      { "name": "Knoblauchzehen", "qty": 2, "unit": "Stück" },
+      { "name": "Long Pepper (frisch gemahlen)", "qty": 1.5, "unit": "TL" },
+      { "name": "Schwarzer Pfeffer", "qty": 1, "unit": "TL" },
+      { "name": "Paprika edelsüß", "qty": 1, "unit": "TL" },
+      { "name": "Kreuzkümmel", "qty": 0.5, "unit": "TL" },
+      { "name": "Tomatenmark", "qty": 2, "unit": "EL" },
+      { "name": "Brühe (kräftig)", "qty": 400, "unit": "ml" },
+      { "name": "Rotwein", "qty": 200, "unit": "ml" },
+      { "name": "Lorbeerblatt", "qty": 1, "unit": "Stück" },
+      { "name": "Thymian", "qty": null, "unit": "etwas" },
+      { "name": "Salz", "qty": null, "unit": "nach Geschmack" },
+      { "name": "Öl", "qty": null, "unit": "etwas zum Anbraten" }
+    ],
+    "steps": "1. Long Pepper, schwarzen Pfeffer, Paprika und Kreuzkümmel in einer Pfanne ohne Fett 30 Sekunden leicht anrösten.\n2. Fleisch portionsweise scharf anbraten, herausnehmen. Zwiebeln und Knoblauch im Bratensatz anschwitzen.\n3. Fleisch zurück in den Topf geben, mit dem Gewürzmix bestäuben und 1–2 Minuten mitrösten.\n4. Tomatenmark kurz mitrösten, mit Rotwein ablöschen und einkochen lassen.\n5. Brühe, Lorbeerblatt und Thymian hinzufügen. Bei kleiner Hitze 90–120 Minuten zugedeckt köcheln lassen, bis das Fleisch butterzart ist.\n6. Abschmecken, Lorbeer entfernen und servieren."
   }
 ]
