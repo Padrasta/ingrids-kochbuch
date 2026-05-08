@@ -1,21 +1,28 @@
 [
   {
     "id": 1,
-    "name": "Mein klassisches Gulasch",
+    "name": "Ingrid's Supergulasch",
     "duration": 150,
     "mealCat": "Abendessen",
-    "descCat": "Eintopf",
+    "descCat": "Schmorgericht",
     "ingredients": [
-      { "name": "Rindfleisch (gulaschfertig)", "qty": 600, "unit": "g" },
-      { "name": "Zwiebeln", "qty": 3, "unit": "Stück" },
-      { "name": "Paprikaschoten (rot)", "qty": 2, "unit": "Stück" },
-      { "name": "Tomatenmark", "qty": 3, "unit": "EL" },
-      { "name": "Rotwein", "qty": 200, "unit": "ml" },
-      { "name": "Rinderbrühe", "qty": 400, "unit": "ml" },
-      { "name": "Lorbeerblätter", "qty": 2, "unit": "Stück" },
-      { "name": "Paprikapulver (edelsüß)", "qty": 2, "unit": "TL" }
+      { "name": "Schweinegulasch (gut marmoriert)", "qty": 600, "unit": "g" },
+      { "name": "Rindergulasch (Schulter oder Wange)", "qty": 600, "unit": "g" },
+      { "name": "Zwiebeln", "qty": 800, "unit": "g" },
+      { "name": "Rotwein (trocken, kräftig)", "qty": 300, "unit": "ml" },
+      { "name": "Tomatenmark", "qty": 80, "unit": "g" },
+      { "name": "Lorbeerblätter", "qty": 1, "unit": "Stück" },
+      { "name": "Majoran (getrocknet)", "qty": 0.5, "unit": "TL" },
+      { "name": "Thymian (getrocknet)", "qty": 0.5, "unit": "TL" },
+      { "name": "Kreuzkümmel (Cumin)", "qty": 0.5, "unit": "TL" },
+      { "name": "Paprikapulver (edelsüß, ungarisch)", "qty": 1, "unit": "TL" },
+      { "name": "Scharfe Paprika oder Chili", "qty": 0.5, "unit": "TL" },
+      { "name": "Schwarzer Pfeffer (frisch gemahlen)", "qty": null, "unit": "nach Geschmack" },
+      { "name": "Salz", "qty": null, "unit": "nach Geschmack" },
+      { "name": "Paprika (rot oder gemischt)", "qty": 1, "unit": "Stück" },
+      { "name": "Zartbitterschokolade (mind. 80 % Kakao)", "qty": 0.5, "unit": "Tafel" }
     ],
-    "steps": "1. Zwiebeln fein würfeln und in Öl goldbraun anbraten.\n2. Fleisch portionsweise kräftig anbraten.\n3. Paprika dazu, kurz mitbraten.\n4. Tomatenmark einrühren und 2 Min. rösten.\n5. Mit Rotwein ablöschen, aufkochen.\n6. Brühe und Gewürze hinzufügen.\n7. Bei kleiner Hitze 2 Stunden köcheln lassen, bis das Fleisch zart ist."
+    "steps": "1. Das Schweine- und Rindergulasch portionsweise in einer großen, heißen Pfanne oder im Bräter hart anbraten, bis es eine schöne dunkle Kruste hat. Das Fleisch in einen großen Schmortopf oder Bräter geben.\n2. Die kleingeschnittenen Zwiebeln im selben Bräter (mit dem Bratensatz) glasig und leicht goldbraun anschwitzen. Das Fleisch wieder dazugeben.\n3. Mit Rotwein ablöschen und kräftig aufkochen lassen, damit der Alkohol verdampft. Tomatenmark einrühren. Alle Gewürze und Kräuter (Lorbeer, Majoran, Thymian, Kreuzkümmel, Paprika, Chili, Pfeffer, Salz) dazugeben.\n4. Mit Wasser oder Brühe angießen, bis das Fleisch gerade so bedeckt ist. Mit Deckel bei 180–200 °C (Ober-/Unterhitze) 2 Stunden im Ofen schmoren lassen. Zwischendurch einmal umrühren.\n5. Nach 2 Stunden die grob gewürfelte Paprika dazugeben und weitere 30 Minuten ohne Deckel oder mit leicht geöffnetem Deckel garen, bis die Paprika noch Biss hat.\n6. Den Ofen ausschalten. Die Zartbitterschokolade in Stücke brechen, ins Gulasch geben und unterrühren, bis sie vollständig geschmolzen ist. Noch 5 Minuten ruhen lassen. Abschmecken – eventuell noch etwas Salz oder einen Schuss Rotwein.\n\n(Tipp: Das Rezept ist für 6 Portionen ausgelegt. Der Zutatenrechner kann bei Bedarf hochskalieren.)"
   },
   {
     "id": 2,
