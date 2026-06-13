@@ -14,7 +14,7 @@
       { "name": "Lorbeerblätter", "qty": 1, "unit": "Stück" },
       { "name": "Majoran (getrocknet)", "qty": 0.5, "unit": "TL" },
       { "name": "Thymian (getrocknet)", "qty": 0.5, "unit": "TL" },
-      { "name": "Kreuzkümme l (Cumin)", "qty": 0.5, "unit": "TL" },
+      { "name": "Kreuzkümmel (Cumin)", "qty": 0.5, "unit": "TL" },
       { "name": "Paprikapulver (edelsüß, ungarisch)", "qty": 1, "unit": "TL" },
       { "name": "Scharfe Paprika oder Chili", "qty": 0.5, "unit": "TL" },
       { "name": "Schwarzer Pfeffer (frisch gemahlen)", "qty": null, "unit": "nach Geschmack" },
@@ -22,7 +22,7 @@
       { "name": "Paprika (rot oder gemischt)", "qty": 1, "unit": "Stück" },
       { "name": "Zartbitterschokolade (mind. 80 % Kakao)", "qty": 0.5, "unit": "Tafel" }
     ],
-    "steps": "1. Das Schweine- und Rindergulasch portionsweise in einer großen, heißen Pfanne oder im Bräter hart anbraten, bis es eine schöne dunkle Kruste hat. Das Fleisch in einen großen Schmortopf oder Bräter geben.\n2. Die kleingeschnittenen Zwiebeln im selben Bräter (mit dem Bratensatz) glasig und leicht goldbraun anschwitzen. Das Fleisch wieder dazugeben.\n3. Mit Rotwein ablöschen und kräftig aufkochen lassen, damit der Alkohol verdampft. Tomatenmark einrühren. Alle Gewürze und Kräuter (Lorbeer, Majoran, Thymian, Kreuzkümme l, Paprika, Chili, Pfeffer, Salz) dazugeben.\n4. Mit Wasser oder Brühe angießen, bis das Fleisch gerade so bedeckt ist. Mit Deckel bei 180–200 °C (Ober-/Unterhitze) 2 Stunden im Ofen schmoren lassen. Zwischendurch einmal umrühren.\n5. Nach 2 Stunden die grob gewürfelte Paprika dazugeben und weitere 30 Minuten ohne Deckel oder mit leicht geöffnetem Deckel garen, bis die Paprika noch Biss hat.\n6. Den Ofen ausschalten. Die Zartbitterschokolade in Stücke brechen, ins Gulasch geben und unterrühren, bis sie vollständig geschmolzen ist. Noch 5 Minuten ruhen lassen. Abschmecken – eventuell noch etwas Salz oder einen Schuss Rotwein.\n\n(Tipp: Das Rezept ist für 6 Portionen ausgelegt. Der Zutatenrechner kann bei Bedarf hochskalieren.)"
+    "steps": "1. Das Schweine- und Rindergulasch portionsweise in einer großen, heißen Pfanne oder im Bräter hart anbraten, bis es eine schöne dunkle Kruste hat. Das Fleisch in einen großen Schmortopf oder Bräter geben.\n2. Die kleingeschnittenen Zwiebeln im selben Bräter (mit dem Bratensatz) glasig und leicht goldbraun anschwitzen. Das Fleisch wieder dazugeben.\n3. Mit Rotwein ablöschen und kräftig aufkochen lassen, damit der Alkohol verdampft. Tomatenmark einrühren. Alle Gewürze und Kräuter (Lorbeer, Majoran, Thymian, Kreuzkümmel, Paprika, Chili, Pfeffer, Salz) dazugeben.\n4. Mit Wasser oder Brühe angießen, bis das Fleisch gerade so bedeckt ist. Mit Deckel bei 180–200 °C (Ober-/Unterhitze) 2 Stunden im Ofen schmoren lassen. Zwischendurch einmal umrühren.\n5. Nach 2 Stunden die grob gewürfelte Paprika dazugeben und weitere 30 Minuten ohne Deckel oder mit leicht geöffnetem Deckel garen, bis die Paprika noch Biss hat.\n6. Den Ofen ausschalten. Die Zartbitterschokolade in Stücke brechen, ins Gulasch geben und unterrühren, bis sie vollständig geschmolzen ist. Noch 5 Minuten ruhen lassen. Abschmecken – eventuell noch etwas Salz oder einen Schuss Rotwein.\n\n(Tipp: Das Rezept ist für 6 Portionen ausgelegt. Der Zutatenrechner kann bei Bedarf hochskalieren.)"
   },
   {
     "id": 2,
@@ -168,5 +168,24 @@
       { "name": "Schokosplitter", "qty": 70, "unit": "g" }
     ],
     "steps": "1. Weiche Butter, braunen Rohrzucker, Ei, Salz und Zimt verrühren.\n2. Dinkelmehl, Backpulver und Haferflocken unterrühren.\nTeig 30 Minuten kühlen.\nKleine Kugeln formen und leicht flach drücken.\nBei 190 °C Ober-/Unterhitze 10–13 Minuten backen, bis die Kekse goldbraun sind. Auf einem Gitter abkühlen lassen."
+  },
+  {
+    "id": 10,
+    "name": "Low-Cal Knoblauch-Creme (selbstgemacht)",
+    "duration": 10,
+    "mealCat": "Beilage",
+    "descCat": "Dip / Soße",
+    "ingredients": [
+      { "name": "Magerquark", "qty": 250, "unit": "g" },
+      { "name": "griechischer Joghurt 0,2 %", "qty": 150, "unit": "g" },
+      { "name": "Zwiebel (klein)", "qty": 1, "unit": "Stück" },
+      { "name": "Knoblauchzehen", "qty": 2, "unit": "Stück" },
+      { "name": "scharfer Senf", "qty": 10, "unit": "g" },
+      { "name": "Zitronensaft", "qty": 20, "unit": "g" },
+      { "name": "Rapsöl (optional)", "qty": 5, "unit": "g" },
+      { "name": "frische Kräuter (Petersilie, Schnittlauch)", "qty": 10, "unit": "g" },
+      { "name": "Salz, Pfeffer, Prise Zucker", "qty": null, "unit": "nach Geschmack" }
+    ],
+    "steps": "1. Zwiebel sehr fein mit der Mulinette hacken.\n2. Alle Zutaten in eine Schüssel geben und gut verrühren oder kurz pürieren für extra Cremigkeit.\n3. Mindestens 30–60 Minuten ziehen lassen, damit sich die Aromen verbinden.\n\nPasst perfekt zu Pilzen (1 kg Champignons), als Dip oder Soße. Deutlich leichter als der Aldi Wonnemeyer Knoblauch-Creme, aber sehr nah am Geschmack. Hält 3–4 Tage im Kühlschrank."
   }
 ]
