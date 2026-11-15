@@ -127,6 +127,25 @@
         .section-header {
             font-family: 'Playfair Display', serif;
         }
+        .recipe-summary {
+            position: relative;
+            align-self: flex-end;
+        }
+        .vertical-cook {
+            position: absolute;
+            top: 2rem;
+            right: 0;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            color: rgba(114, 47, 55, 0.14);
+            font-family: 'Playfair Display', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: 0.2em;
+            user-select: none;
+            pointer-events: none;
+        }
         .ingredient-item {
             transition: all 0.2s ease;
         }
@@ -144,9 +163,20 @@
             .no-print { display: none !important; }
             .print-only { display: block !important; }
         }
+        @media (min-width: 641px) and (max-width: 900px) {
+            #recipe-grid {
+                width: calc(100% - 3.75rem);
+                margin-left: 0;
+                margin-right: 3.75rem;
+            }
+        }
         @media (max-width: 768px) {
             .recipe-area::before { top: 1rem; right: 4%; font-size: 11rem; }
             .duration-plate { min-width: 4rem; padding-inline: 0.5rem; }
+            .vertical-cook { right: -0.35rem; font-size: 1.6rem; }
+        }
+        @media (max-width: 640px) {
+            .vertical-cook { display: none; }
         }
     </style>
 </head>
@@ -192,8 +222,9 @@
                 <p class="text-[#722F37] text-sm font-semibold tracking-[2px] uppercase">DEINE LIEBLINGSREZEPTE</p>
                 <h2 class="text-4xl font-bold text-[#14532d]">Stur & lecker</h2>
             </div>
-            <div class="text-sm text-[#6b625e]">
+            <div class="recipe-summary text-sm text-[#6b625e]">
                 <span id="recipe-count">0</span> Rezepte
+                <span class="vertical-cook" aria-hidden="true">COOK</span>
             </div>
         </div>
 
