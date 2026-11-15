@@ -10,10 +10,31 @@
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap');
         :root {
             --bordeaux: #722F37;
+            --bordeaux-dark: #4e1d25;
+            --paper: #fffdf9;
+            --paper-shadow: rgba(67, 38, 30, 0.14);
+        }
+        body {
+            background-color: #f4eee7;
+            background-image:
+                radial-gradient(circle at 86% 8%, rgba(255, 248, 224, 0.92) 0, rgba(255, 248, 224, 0) 34rem),
+                radial-gradient(circle at 8% 88%, rgba(114, 47, 55, 0.07) 0, rgba(114, 47, 55, 0) 28rem),
+                linear-gradient(125deg, rgba(255, 255, 255, 0.34), rgba(225, 211, 196, 0.18));
         }
         .nav-bar {
-            background-color: #722F37;
-            box-shadow: 0 2px 10px rgba(114, 47, 55, 0.3);
+            background: linear-gradient(180deg, #7a3540 0%, #682932 100%);
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.16) inset, 0 8px 24px rgba(78, 29, 37, 0.22);
+        }
+        .logo-mark {
+            display: grid;
+            place-items: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            color: #f4dfb7;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04));
+            border: 1px solid rgba(244, 223, 183, 0.38);
+            border-radius: 0.85rem;
+            box-shadow: 0 5px 12px rgba(49, 14, 21, 0.22), 0 1px 0 rgba(255, 255, 255, 0.16) inset;
         }
         .main-content {
             position: relative;
@@ -26,38 +47,73 @@
         .recipe-area::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%) rotate(-8deg);
-            width: 65%;
+            top: 1.5rem;
+            right: -2%;
+            transform: rotate(7deg);
+            width: min(34%, 21rem);
             aspect-ratio: 0.953;
             background-image: url('icon.jpg');
             background-size: contain;
             background-repeat: no-repeat;
-            background-position: top center;
-            opacity: 0.10;
+            background-position: top right;
+            opacity: 0.065;
+            filter: saturate(0.65) contrast(0.85) sepia(0.08);
             pointer-events: none;
             z-index: 0;
         }
+
         .recipe-card {
             position: relative;
             z-index: 1;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            background: linear-gradient(145deg, #fffefb 0%, #fffaf4 100%);
+            border-radius: 1.25rem;
+            box-shadow:
+                0 1px 0 rgba(255, 255, 255, 0.95) inset,
+                0 3px 8px rgba(67, 38, 30, 0.08),
+                0 13px 28px rgba(67, 38, 30, 0.055);
+            transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease, border-color 0.28s ease;
+        }
+        .recipe-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 6px;
+            background: linear-gradient(90deg, #5a222a, #7d3942 70%, #93505a);
+            box-shadow: 3px 0 8px rgba(78, 29, 37, 0.16);
         }
         .recipe-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 25px -5px rgb(114 47 55 / 0.1), 0 8px 10px -6px rgb(114 47 55 / 0.1);
+            transform: translate3d(2px, -2px, 0) rotate(0.12deg);
+            box-shadow:
+                0 1px 0 rgba(255, 255, 255, 0.95) inset,
+                0 7px 14px rgba(67, 38, 30, 0.10),
+                0 20px 38px rgba(67, 38, 30, 0.075);
+        }
+        .duration-plate {
+            min-width: 4.7rem;
+            padding: 0.55rem 0.75rem 0.48rem;
+            border: 1px solid rgba(114, 47, 55, 0.10);
+            border-radius: 0.9rem;
+            background: linear-gradient(145deg, rgba(114, 47, 55, 0.075), rgba(114, 47, 55, 0.025));
+            box-shadow: 0 1px 2px rgba(78, 29, 37, 0.06) inset, 0 1px 0 rgba(255, 255, 255, 0.7);
         }
         .book-page {
             box-shadow: 0 10px 30px -15px rgb(0 0 0 / 0.3);
             border: 1px solid #e5e7eb;
         }
+        .book-spread {
+            box-shadow: 0 34px 80px rgba(32, 13, 15, 0.38), 0 3px 10px rgba(32, 13, 15, 0.18);
+        }
         .book-left {
             border-right: 2px solid #d1d5db;
-            background: linear-gradient(to right, #fff, #f9fafb);
+            background: linear-gradient(to right, #fffdf8 0%, #fffdf9 78%, #eee7dc 100%);
+            box-shadow: -16px 0 32px rgba(78, 29, 37, 0.04) inset;
         }
         .book-right {
-            background: linear-gradient(to left, #fff, #f9fafb);
+            background: linear-gradient(to left, #fffdf8 0%, #fffdf9 78%, #ece3d8 100%);
+            box-shadow: 16px 0 32px rgba(78, 29, 37, 0.04) inset;
         }
         .nav-title {
             font-family: 'Playfair Display', serif;
@@ -83,14 +139,18 @@
             .no-print { display: none !important; }
             .print-only { display: block !important; }
         }
+        @media (max-width: 768px) {
+            .recipe-area::before { width: 52%; right: -18%; opacity: 0.045; }
+            .duration-plate { min-width: 4rem; padding-inline: 0.5rem; }
+        }
     </style>
 </head>
-<body class="bg-[#f8f5f2] text-[#2c2522] font-sans">
+<body class="text-[#2c2522] font-sans">
     <!-- Top Navigation -->
     <nav class="nav-bar text-white sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-8 py-5 flex items-center justify-between">
             <div class="flex items-center gap-x-3">
-                <span class="text-4xl">🍽️</span>
+                <span class="logo-mark"><i class="fa-solid fa-book-open"></i></span>
                 <h1 class="nav-title text-3xl font-bold tracking-tight">Ingrid´s Kochbuch</h1>
             </div>
             
@@ -172,7 +232,7 @@
 
     <!-- Recipe Detail Modal (Book View) -->
     <div id="recipe-modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[100] p-4" onclick="if (event.target.id === 'recipe-modal') closeModal()">
-        <div onclick="event.stopImmediatePropagation()" class="bg-white w-full max-w-5xl rounded-3xl overflow-hidden shadow-2xl modal">
+        <div onclick="event.stopImmediatePropagation()" class="book-spread bg-white w-full max-w-5xl rounded-3xl overflow-hidden modal">
             <!-- Modal Header -->
             <div class="px-8 py-5 border-b flex items-center justify-between bg-[#722F37] text-white">
                 <div class="flex items-center gap-x-4">
@@ -189,8 +249,9 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-x-2">
-                    <button onclick="editRecipe(currentRecipeId)" class="text-white/70 hover:text-white transition-colors">
-                        <i class="fa-solid fa-edit text-xl"></i>
+                    <button onclick="editRecipe(currentRecipeId)" class="flex items-center gap-x-2 rounded-xl border border-white/25 bg-white/10 px-3.5 py-2 text-sm font-semibold text-white/90 shadow-sm transition-all hover:bg-white/20 hover:text-white active:translate-y-px" title="Rezept bearbeiten">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                        <span>Rezept bearbeiten</span>
                     </button>
                     <button onclick="closeModal()" class="text-white/60 hover:text-white">
                         <i class="fa-solid fa-times text-2xl"></i>
@@ -363,7 +424,7 @@
             
             toShow.forEach(recipe => {
                 const card = document.createElement('div');
-                card.className = `recipe-card bg-white border-l-[6px] border-[#722F37] border border-[#722F37]/10 rounded-3xl p-6 cursor-pointer hover:border-[#722F37]/30`;
+                card.className = `recipe-card border border-[#722F37]/10 p-6 cursor-pointer hover:border-[#722F37]/25`;
                 card.innerHTML = `
                     <div class="flex justify-between items-start">
                         <div class="flex-1">
@@ -378,9 +439,9 @@
                                 ${recipe.healthy ? `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-700">🌿</span>` : ''}
                             </div>
                         </div>
-                        <div class="text-right ml-4">
-                            <div class="text-3xl font-bold text-[#722F37]">${recipe.duration}</div>
-                            <div class="text-[10px] text-[#6b625e] -mt-1">MIN</div>
+                        <div class="duration-plate text-center ml-4">
+                            <div class="text-2xl font-bold leading-none text-[#722F37]">${recipe.duration}</div>
+                            <div class="mt-1 text-[9px] font-semibold tracking-[0.13em] text-[#6b625e]">MINUTEN</div>
                         </div>
                     </div>
                 `;
