@@ -159,8 +159,41 @@
             .duration-plate { min-width: 4rem; padding-inline: 0.5rem; }
             .vertical-cook { right: 1rem; font-size: 4rem; }
         }
-        @media (max-width: 640px) {
+        @media screen and (max-width: 640px) {
             .vertical-cook { display: none; }
+            .nav-bar > div {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.75rem;
+                padding: 0.75rem 1rem;
+            }
+            .nav-title { font-size: 1.5rem; }
+            .nav-bar > div > div:last-child { flex-wrap: wrap; gap: 0.5rem; }
+            .nav-bar > div > div:last-child > div { flex: 1 0 100%; }
+            .nav-bar button { flex: 1; justify-content: center; min-height: 44px; }
+            .main-content { padding: 1.5rem 1rem; }
+            .recipe-card { padding: 1rem; overflow-wrap: anywhere; }
+            .recipe-card h3 + div { flex-wrap: wrap; row-gap: 0.25rem; }
+            .duration-plate { flex-shrink: 0; margin-left: 0.5rem; }
+            #recipe-modal { padding: 0.5rem; }
+            .book-spread { max-height: calc(100dvh - 1rem); overflow-wrap: anywhere; }
+            .book-spread > :first-child { padding: 0.5rem 0.75rem; gap: 0.5rem; }
+            #modal-recipe-name { font-size: 1.125rem; line-height: 1.25; }
+            #modal-recipe-name + div { flex-wrap: wrap; row-gap: 0.25rem; }
+            .book-spread > :first-child button { min-height: 44px; }
+            .book-spread > :first-child > :last-child { flex-shrink: 0; }
+            .book-spread > :first-child > :last-child button span { max-width: 6ch; }
+            .book-left, .book-right { padding: 1rem; box-shadow: none; background: var(--paper); }
+            .book-left { border-right: 0; }
+            .ingredient-item { gap: 0.75rem; }
+            .ingredient-item span:last-child { flex-shrink: 0; }
+            #filter-modal > div, #add-modal > div {
+                padding: 1rem;
+                max-height: calc(100dvh - 2rem);
+                overflow-y: auto;
+                overscroll-behavior: contain;
+            }
+            #add-modal > div > div:last-child { flex-wrap: wrap; gap: 0.5rem; }
         }
     </style>
 </head>
