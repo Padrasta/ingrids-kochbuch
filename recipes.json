@@ -972,5 +972,71 @@
       }
     ],
     "steps": "1. Kartoffeln in etwa 5 mm dicke Scheiben schneiden und in Salzwasser ungefähr 8 Minuten vorkochen. Sie sollen biegsam, aber noch nicht gar sein. Abgießen und ausdampfen lassen.\n2. Champignons in einer sehr heißen Pfanne kräftig braten, anfangs bei Bedarf ohne Öl, bis ihr Wasser verdampft ist und sie Farbe angenommen haben. Herausnehmen.\n3. 5 g Öl in die Pfanne geben und das vegane Hack kräftig anrösten. Den in Ringe geschnittenen Lauch dazugeben und einige Minuten mitbraten.\n4. Fein gehackten Knoblauch, geräuchertes Paprikapulver, Majoran und frisch gemahlenen Long Pepper einrühren. Champignons zurück in die Pfanne geben und mit Sojasoße würzen. Erst danach mit Salz abschmecken.\n5. Für die Kruste Joghurt, Ei, beide Senfsorten und ungefähr die Hälfte des Käses verrühren. Mit Muskat, Long Pepper und wenig Salz würzen.\n6. Die Hack-Lauch-Champignon-Mischung in eine passende Auflaufform geben. Kartoffelscheiben darauf verteilen, die Senf-Joghurt-Mischung darübergeben und mit dem restlichen Käse bestreuen.\n7. Bei 200 °C Ober-/Unterhitze etwa 20–25 Minuten backen, bis die Oberfläche goldbraun ist und es am Rand blubbert. Optional zum Schluss ungefähr 2 Minuten unter den Grill stellen und dabei im Auge behalten.\n\nErgibt 2 große Portionen mit je ungefähr 525 kcal. Mit veganem Hack bei 180 kcal pro 100 g hat das gesamte Gericht ungefähr 1.047 kcal; je nach Marke des veganen Hacks liegt es ungefähr zwischen 986 und 1.126 kcal."
+  },
+  {
+    "id": 16,
+    "name": "Char`s cremige Lauch-Hähnchen-Kartoffelpfanne",
+    "duration": 50,
+    "mealCat": "Abendessen",
+    "descCat": "Hauptgericht",
+    "healthy": true,
+    "ingredients": [
+      {
+        "name": "Kartoffeln",
+        "qty": 550,
+        "unit": "g"
+      },
+      {
+        "name": "Hähnchenbrust",
+        "qty": 250,
+        "unit": "g"
+      },
+      {
+        "name": "Lauch (geputzt)",
+        "qty": 400,
+        "unit": "g"
+      },
+      {
+        "name": "Frischkäse light",
+        "qty": 80,
+        "unit": "g"
+      },
+      {
+        "name": "Parmesan",
+        "qty": 10,
+        "unit": "g"
+      },
+      {
+        "name": "Öl",
+        "qty": 5,
+        "unit": "g (ca. 1 gestrichener TL)"
+      },
+      {
+        "name": "Dijon-Senf",
+        "qty": 1,
+        "unit": "gehäufter TL"
+      },
+      {
+        "name": "Knoblauchzehen",
+        "qty": 2,
+        "unit": "Stück"
+      },
+      {
+        "name": "Zitrone",
+        "qty": 0.5,
+        "unit": "Stück, Abrieb und Saft"
+      },
+      {
+        "name": "Muskat, schwarzer Pfeffer und Salz",
+        "qty": null,
+        "unit": "nach Geschmack"
+      },
+      {
+        "name": "Wasser oder Hühnerbrühe",
+        "qty": 150,
+        "unit": "ml, nach Bedarf"
+      }
+    ],
+    "steps": "1. Kartoffeln in kleine Würfel schneiden und in Salzwasser 7–8 Minuten knapp vorgaren. Abgießen und gründlich ausdampfen lassen.\n2. Hähnchenbrust trocken tupfen, in mundgerechte Stücke schneiden und mit Salz und Pfeffer würzen. Das Öl in einer großen beschichteten Pfanne erhitzen, das Hähnchen kräftig anbraten und herausnehmen, sobald es außen Farbe hat. Es gart später in der Sauce fertig.\n3. Die Kartoffelwürfel in derselben Pfanne rundherum kräftig goldbraun braten. Bei Bedarf esslöffelweise Wasser zugeben, damit der Bratensatz nicht verbrennt. Kartoffeln anschließend an den Pfannenrand schieben oder kurz herausnehmen.\n4. Lauch längs aufschneiden, gründlich waschen und in etwa 1 cm breite Ringe schneiden. In die Pfanne geben und bei mittlerer Hitze 6–8 Minuten schmoren, bis er weich wird und an einzelnen Stellen Farbe bekommt. Fein gehackten Knoblauch in der letzten Minute mitbraten.\n5. Frischkäse, Dijon-Senf und zunächst 100 ml Wasser oder Brühe einrühren und den Bratensatz lösen. Mit frisch geriebener Muskatnuss und schwarzem Pfeffer würzen. Bei Bedarf weitere Flüssigkeit zugeben, bis eine cremige Sauce entsteht.\n6. Hähnchen und Kartoffeln zurück in die Pfanne geben. Alles 4–5 Minuten leise köcheln lassen, bis das Hähnchen vollständig gegart ist und die Sauce an Kartoffeln und Lauch haftet.\n7. Parmesan einrühren. Zum Schluss den fein abgeriebenen Zitronenabrieb und zunächst nur einen kleinen Spritzer Zitronensaft zugeben. Abschmecken und bei Bedarf mehr Säure, Salz, Pfeffer oder Muskat ergänzen.\n\nErgibt eine sehr große Abendportion oder zwei normale Portionen. Mit typischen Produktwerten hat die gesamte Pfanne ungefähr 1.040 kcal; je nach Frischkäse, Parmesan und Hähnchen liegt sie ungefähr um 1.000 kcal."
   }
 ]
